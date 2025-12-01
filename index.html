@@ -7,7 +7,7 @@
     <meta name="keywords" content="servicios informáticos, reparación laptops, desarrollo web, Autocad, Colima">
     <title>TechSolutions - Servicios Informáticos Innovadores</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -42,24 +42,34 @@
         border: 1px solid #5a5a5a;
     }
 
-    /* h3 en modo claro */
-    body:not(.dark-mode) .service-card h3 {
-        color: #5a9bd4;
+    /* h3 en modo claro - Actualizado para blanco en todos los service-card */
+    body:not(.dark-mode) .service-card h3,
+    body:not(.dark-mode) .service-card-auto-fusion h3 {
+        color: white; /* Blanco para contraste en degradados */
     }
 
-    /* p en modo claro */
-    body:not(.dark-mode) .service-card p {
-        color: #000;
+    /* p en modo claro - Actualizado para blanco en todos los service-card */
+    body:not(.dark-mode) .service-card p,
+    body:not(.dark-mode) .service-card ul,
+    body:not(.dark-mode) .service-card li,
+    body:not(.dark-mode) .service-card-auto-fusion p,
+    body:not(.dark-mode) .service-card-auto-fusion ul,
+    body:not(.dark-mode) .service-card-auto-fusion li {
+        color: white; /* Blanco para contraste en degradados */
     }
 
-    body.dark-mode .service-card h3 {
-        color: #07778e;
+    body.dark-mode .service-card h3,
+    body.dark-mode .service-card-auto-fusion h3 {
+        color: white; /* Blanco también en oscuro para consistencia */
     }
 
     body.dark-mode .service-card p,
     body.dark-mode .service-card ul, 
-    body.dark-mode .service-card li {
-        color: #000;
+    body.dark-mode .service-card li,
+    body.dark-mode .service-card-auto-fusion p,
+    body.dark-mode .service-card-auto-fusion ul, 
+    body.dark-mode .service-card-auto-fusion li {
+        color: white; /* Blanco para legibilidad en degradados */
     }
 
     body.dark-mode .contact-form h3 {
@@ -252,8 +262,12 @@
         margin-bottom: 40px; 
     }
 
-
     .service-card {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .service-card-auto-fusion {
         cursor: pointer;
         position: relative;
     }
@@ -266,8 +280,20 @@
         transition: max-height .4s ease, opacity .4s ease;
     }
 
+    .card-content-auto-fusion {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height .4s ease, opacity .4s ease;
+    }
+
     /* Cuando pasas el mouse, se expande */
     .service-card:hover .card-content {
+        max-height: 500px; /* Ajusta según contenido */
+        opacity: 1;
+    }
+    /* Cuando pasas el mouse, se expande */
+    .service-card-auto-fusion:hover .card-content-auto-fusion {
         max-height: 500px; /* Ajusta según contenido */
         opacity: 1;
     }
@@ -277,9 +303,16 @@
         max-height: 500px;
         opacity: 1;
     }
+    .service-card-auto-fusion.active .card-content-auto-fusion {
+        max-height: 500px;
+        opacity: 1;
+    }
 
     /* También aplicar efecto visual cuando está activo */
     .service-card.active {
+        transform: translateY(-10px);
+    }
+    .service-card-auto-fusion.active {
         transform: translateY(-10px);
     }
 
@@ -287,8 +320,16 @@
         max-height: 500px;
         opacity: 1;
     }
+    .service-card-auto-fusion.active .card-content-auto-fusion {
+        max-height: 500px;
+        opacity: 1;
+    }
 
     .service-card.active {
+        transform: translateY(-10px);
+    }
+
+    .service-card-auto-fusion.active {
         transform: translateY(-10px);
     }
 
@@ -298,6 +339,11 @@
         transform: none;
     }
 
+    body.touch .service-card-auto-fusion:hover .card-content-auto-fusion,
+    body.touch .service-card-auto-fusion:hover {
+        /* Desactiva hover en dispositivos táctiles */
+        transform: none;
+    }
 
     .services { 
         display: grid; 
@@ -306,16 +352,58 @@
         margin-bottom: 40px; 
     }
 
-    .service-card { 
-        background: rgba(255,255,255,0.1); 
+    /* Estilos base para todos los service-card (comunes) */
+    .service-card, 
+    .service-card-auto-fusion { 
         border-radius: 15px; 
         padding: 20px; 
         box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
         backdrop-filter: blur(10px); 
         transition: transform 0.3s, box-shadow 0.3s; 
+        color: white; /* Texto blanco para contraste en todos los degradados */
+        background-size: 200% 200%; /* Para animación de degradado */
     }
 
-    .service-card:hover { 
+    /* Colores únicos para cada servicio (degradados animados suaves y amigables) */
+    .service-card.windows {
+        background: linear-gradient(135deg, #2583ee, #0467c9, #034e90); /* Azul con 3 tonos para mejor flujo */
+        animation: cardGradientShift 20s ease infinite; /* Animación lenta */
+    }
+
+    .service-card.recovery {
+        background: linear-gradient(135deg, #6ecf07, #5b9b12, #325e04); /* Verde con 3 tonos */
+        animation: cardGradientShift 25s ease infinite; /* Diferente duración para variedad */
+    }
+
+    .service-card.migration {
+        background: linear-gradient(135deg, #9013fe, #6a0dad, #4b0082); /* Púrpura con 3 tonos */
+        animation: cardGradientShift 18s ease infinite;
+    }
+
+    .service-card.systems {
+        background: linear-gradient(135deg, #f49805, #b9680c, #8f4004); /* Naranja con 3 tonos */
+        animation: cardGradientShift 22s ease infinite;
+    }
+
+    .service-card.web {
+        background: linear-gradient(135deg, #e91e63, #d3125f, #830a32); /* Rosa con 3 tonos */
+        animation: cardGradientShift 19s ease infinite;
+    }
+
+    .service-card-auto-fusion.autocad {
+        background: linear-gradient(135deg, #ff0000, #800080, #0000ff); /* Rojo a púrpura a azul (como pediste, con 3 colores) */
+        animation: cardGradientShift 21s ease infinite;
+    }
+
+    /* Animación para los degradados de los cards (similar al fondo, pero más suave) */
+    @keyframes cardGradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .service-card:hover,
+    .service-card-auto-fusion:hover { 
         transform: translateY(-10px); 
         box-shadow: 0 12px 40px rgba(0,0,0,0.5); 
     }
@@ -548,7 +636,6 @@
         color: #000;
         border: 1px solid #bbb;
     }
-
     </style>
 </head>
 <body>
@@ -565,13 +652,13 @@
     <div class="floating-elements">
         <div class="circle elem1"></div>
         <div class="line elem2"></div>
-        <div class="code elem3"></div>
+        <div class="code elem3">0</div>
         <div class="circle elem4"></div>
         <div class="line elem5"></div>
-        <div class="code elem6"></div>
+        <div class="code elem6">1</div>
         <div class="circle elem7"></div>
         <div class="line elem8"></div>
-        <div class="code elem9"></div>
+        <div class="code elem9">0</div>
         <div class="circle elem10"></div>
     </div>
 
@@ -593,39 +680,78 @@
         </div>
         
         <section id="servicios" class="services">
-            <div class="service-card">
+            <div class="service-card windows">
                 <h3>🚀 Reparación e Instalación de Windows (Home a Pro, manteniendo garantía)</h3>
                 <div class="card-content">
-                    <p>Actualiza o repara tu sistema operativo sin riesgos, preservando la cobertura del fabricante para máxima tranquilidad.</p>
+                    <p>Actualizo, reinstalo o reparo Windows sin perder tus archivos y manteniendo tu garantía activa.</p>
+                    <p>🔥 Servicios disponibles:</p>
+                    <ul>
+                        <li><strong>Actualización:</strong> De Home a Pro sin riesgos.</li>
+                        <li><strong>Reparación del sistema:</strong> Pantalla azul, lentitud, errores de arranque.</li>
+                        <li><strong>Optimización completa:</strong> Eliminación de virus, limpieza profunda y drivers al día.</li>
+                        <li><strong>Formateo completo:</strong> Windows limpio y listo para trabajar.</li>
+                    </ul>
+                    <p>⚡ Entrega el mismo día en la mayoría de los casos.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="service-card recovery">
                 <h3>🔓 Recuperación de Acceso a Laptops (Contraseñas Olvidadas)</h3>
                 <div class="card-content">
-                    <p>Recupera el acceso de forma segura y rápida, utilizando técnicas avanzadas para no perder datos. Solo con permiso del propietario.</p>
+                    <p>Recupero el acceso a tu laptop sin perder información y con total seguridad.</p>
+                    <p>🔐 Tipos de recuperación:</p>
+                    <ul>
+                        <li><strong>Cuentas locales:</strong> Restauración sin borrar archivos.</li>
+                        <li><strong>Cuentas Microsoft:</strong> Asistencia para recuperar acceso.</li>
+                        <li><strong>Equipos lentos:</strong> Se realiza revisión y optimización opcional.</li>
+                    </ul>
+                    <p>⚠ Solo con verificación del propietario para proteger tu información.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="service-card migration">
                 <h3>💾 Migración de Información (Clonar Disco SSD o HDD)</h3>
                 <div class="card-content">
-                    <p>Transfiere todos tus archivos a un nuevo disco sin interrupciones, ideal para upgrades tecnológicos.</p>
+                    <p>Clono tu disco completo sin perder nada: programas, configuraciones y archivos intactos.</p>
+                    <p>📦 Opciones de migración:</p>
+                    <ul>
+                        <li><strong>HDD → SSD:</strong> Aumenta velocidad hasta 10x.</li>
+                        <li><strong>SSD → SSD NVMe:</strong> Ideal para laptops modernas.</li>
+                        <li><strong>Respaldo:</strong> Copia de seguridad antes del proceso.</li>
+                        <li><strong>Mantenimiento opcional:</strong> Optimización después del clonado.</li>
+                    </ul>
+                    <p>⚡ Equipo listo para usar como si nada hubiera cambiado.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="service-card systems">
                 <h3>📊 Crear o Modificar Sistemas Comerciales</h3>
                 <div class="card-content">
-                    <p>Desarrollamos software personalizado para negocios locales, optimizando inventarios y ventas con innovación.</p>
+                    <p>Diseño o mejoro sistemas para negocios con funciones prácticas y personalizadas.</p>
+                    <p>🛠 Opciones disponibles:</p>
+                    <ul>
+                        <li><strong>Inventarios:</strong> Control de productos y existencias.</li>
+                        <li><strong>Ventas:</strong> Registro, notas y reportes automáticos.</li>
+                        <li><strong>Clientes:</strong> Historial, fichas y seguimiento.</li>
+                        <li><strong>Personalización:</strong> Adaptado totalmente a tu negocio.</li>
+                    </ul>
+                    <p>⚡ Ideal para tiendas, papelerías, talleres, gimnasios y más.</p>
                 </div>
             </div>
-            <div class="service-card">
-                <h3>🌐 Programar Páginas WEB para Negocios</h3>
+            <div class="service-card web">
+                <h3>🌐 Creación de páginas WEB</h3>
                 <div class="card-content">
-                    <p>Sitios web modernos y responsivos para restaurantes, tiendas o empresas, con diseño llamativo y funcional.</p>
+                    <p>Diseño páginas web modernas, rápidas y adaptadas a celular para cualquier tipo de negocio.</p>
+                    <p>💡 ¿Qué incluye tu página?</p>
+                    <ul>
+                        <li><strong>Diseño responsivo:</strong> Se adapta a celulares, tablets y PC.</li>
+                        <li><strong>SEO básico:</strong> Para que te encuentren en Google.</li>
+                        <li><strong>Formulario de contacto:</strong> Mensajes directos o a WhatsApp.</li>
+                        <li><strong>Secciones personalizadas:</strong> Servicios, catálogo, galería, etc.</li>
+                    </ul>
+                    <p>⚡ Opciones extra: dominio, hosting y correos empresariales.</p>
                 </div>
             </div>
-            <div class="service-card">
-                <h3>🖌️ Diseños de 🅰UTOCAD y 🟧FUSION 360</h3>
-                <div class="card-content">
+            <div class="service-card-auto-fusion autocad">
+                <h3>🖌️ Diseños de AUTOCAD y FUSION 360</h3>
+                <div class="card-content-auto-fusion">
                     <p>Diseños 2D y 3D ¡Yo lo hago por ti!</p>
                     <p>🔥 Paquetes disponibles:</p>
                     <ul>
@@ -927,6 +1053,20 @@
 
             // Cerrar todas las activas
             document.querySelectorAll('.service-card.active')
+                .forEach(c => c.classList.remove('active'));
+
+            // Si no estaba activa, activarla
+            if (!active) card.classList.add('active');
+        });
+    });
+
+    document.querySelectorAll('.service-card-auto-fusion h3').forEach(title => {
+        title.addEventListener('click', () => {
+            const card = title.parentElement;
+            const active = card.classList.contains('active');
+
+            // Cerrar todas las activas
+            document.querySelectorAll('.service-card-auto-fusion.active')
                 .forEach(c => c.classList.remove('active'));
 
             // Si no estaba activa, activarla
