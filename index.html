@@ -681,7 +681,7 @@
         
         <section id="servicios" class="services">
             <div class="service-card windows">
-                <h3>🚀 Reparación e Instalación de Windows (Home a Pro, manteniendo garantía)</h3>
+                <h3 style="text-align: center;">🚀 Reparación e Instalación de Windows (Home a Pro, manteniendo garantía)</h3>
                 <div class="card-content">
                     <p>Actualizo, reinstalo o reparo Windows sin perder tus archivos y manteniendo tu garantía activa.</p>
                     <p>🔥 Servicios disponibles:</p>
@@ -695,7 +695,7 @@
                 </div>
             </div>
             <div class="service-card recovery">
-                <h3>🔓 Recuperación de Acceso a Laptops (Contraseñas Olvidadas)</h3>
+                <h3 style="text-align: center;">🔓 Recuperación de Acceso a Laptops (Contraseñas Olvidadas)</h3>
                 <div class="card-content">
                     <p>Recupero el acceso a tu laptop sin perder información y con total seguridad.</p>
                     <p>🔐 Tipos de recuperación:</p>
@@ -708,7 +708,7 @@
                 </div>
             </div>
             <div class="service-card migration">
-                <h3>💾 Migración de Información (Clonar Disco SSD o HDD)</h3>
+                <h3 style="text-align: center;">💾 Migración de Información (Clonar Disco SSD o HDD)</h3>
                 <div class="card-content">
                     <p>Clono tu disco completo sin perder nada: programas, configuraciones y archivos intactos.</p>
                     <p>📦 Opciones de migración:</p>
@@ -722,9 +722,9 @@
                 </div>
             </div>
             <div class="service-card systems">
-                <h3>📊 Crear o Modificar Sistemas Comerciales</h3>
+                <h3 style="text-align: center;">📊 Crear o Modificar Sistemas Comerciales</h3>
                 <div class="card-content">
-                    <p>Mejoras o Diseños de sistemas para negocios con funciones prácticas y personalizadas.</p>
+                    <p>Diseño o mejoro sistemas para negocios con funciones prácticas y personalizadas.</p>
                     <p>🛠 Opciones disponibles:</p>
                     <ul>
                         <li><strong>Inventarios:</strong> Control de productos y existencias.</li>
@@ -736,7 +736,7 @@
                 </div>
             </div>
             <div class="service-card web">
-                <h3>🌐 Creación de páginas WEB</h3>
+                <h3 style="text-align: center;">🌐 Creación de páginas WEB</h3>
                 <div class="card-content">
                     <p>Diseño páginas web modernas, rápidas y adaptadas a celular para cualquier tipo de negocio.</p>
                     <p>💡 ¿Qué incluye tu página?</p>
@@ -750,7 +750,7 @@
                 </div>
             </div>
             <div class="service-card-auto-fusion autocad">
-                <h3>🖌️ Diseños de AUTOCAD y FUSION 360</h3>
+                <h3 style="text-align: center;">🖌️ Diseños de AUTOCAD y FUSION 360</h3>
                 <div class="card-content-auto-fusion">
                     <p>Diseños 2D y 3D ¡Yo lo hago por ti!</p>
                     <p>🔥 Paquetes disponibles:</p>
@@ -1059,21 +1059,7 @@
             if (!active) card.classList.add('active');
         });
     });
-
-    document.querySelectorAll('.service-card-auto-fusion h3').forEach(title => {
-        title.addEventListener('click', () => {
-            const card = title.parentElement;
-            const active = card.classList.contains('active');
-
-            // Cerrar todas las activas
-            document.querySelectorAll('.service-card-auto-fusion.active')
-                .forEach(c => c.classList.remove('active'));
-
-            // Si no estaba activa, activarla
-            if (!active) card.classList.add('active');
-        });
-    });
-
+    
     // Detectar si el dispositivo es táctil
     if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
         document.body.classList.add('touch');
@@ -1081,4 +1067,3 @@
 </script>
 </body>
 </html>
-
